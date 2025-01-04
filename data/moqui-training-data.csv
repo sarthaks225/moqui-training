@@ -1,0 +1,4 @@
+# first record is ${entityName, entityAlias or serviceName}, ${dataType}
+moquiTraining,demo
+trainingId,trainingName,trainingDate,trainingPrice,trainingDuration
+C01,Kotlin,2025-10-12,1999,12

@@ -1,0 +1,19 @@
+[
+  { "_dataType": "demo" },
+  {
+    "_entity": "moquiTraining",
+    "trainingId": "J01",
+    "trainingName": "Python",
+    "trainingDate": "2025-01-04",
+    "trainingPrice": 3500,
+    "trainingDuration": 6
+  },
+  {
+    "_entity": "moquiTraining",
+    "trainingId": "J02",
+    "trainingName": "c++",
+    "trainingDate": "2025-01-04",
+    "trainingPrice": 4500,
+    "trainingDuration": 10
+  }
+]
