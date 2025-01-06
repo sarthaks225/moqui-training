@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Service with the default type to generate MoquiTraining records
+-->
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-2.1.xsd">
+    <service verb="create" noun="MoquiTraining" type="script" location="component://moqui-training/script/MoquiTraining.groovy">
+        <in-parameters>
+            <parameter name="trainingName" type="String" required="true"/>
+            <parameter name="trainingDate" type="String" required="true"/>
+            <parameter name="trainingPrice" type="BigDecimal" required="false"/>
+            <parameter name="trainingDuration" type="Integer" required="false"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="trainingId" type="String"/>
+        </out-parameters>
+    </service>
+</services>
