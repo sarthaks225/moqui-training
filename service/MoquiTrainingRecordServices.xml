@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+
+    <service verb="find" noun="MoquiTraining">
+        <in-parameters>
+            <parameter name="trainingName" />
+            <parameter name="trainingId" />
+        </in-parameters>
+        <out-parameters>
+            <parameter name="trainingList"  required="true"/>
+        </out-parameters>
+        <actions>
+            <if condition="trainingName!=null || trainingId!=null">
+                <entity-find entity-name="moqui.training.MoquiTraining" list="trainingList">
+                    <econdition field-name="trainingName" ignore-if-empty="true"/>
+                    <econdition field-name="trainingId" ignore-if-empty="true"/>
+                    <select-field field-name="trainingId"/>
+                    <select-field field-name="trainingName"/>
+                    <select-field field-name="trainingDate"/>
+                </entity-find>
+            </if>
+            <else>
+                <return error="true" message="Enter training name OR training id"/>
+            </else>
+        </actions>
+    </service>
+</services>
