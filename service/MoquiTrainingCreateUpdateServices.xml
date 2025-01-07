@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">    <!--     Fetching record from the database -->
+
+    <service verb="store" noun="MoquiTraining" >
+        <in-parameters>
+            <auto-parameters entity-name="MoquiTraining" include="nonpk"/>
+            <parameter name="trainingId" required="true"/>
+            <parameter name="trainingName" required="true" />
+            <parameter name="trainingDate" />
+        </in-parameters>
+        <out-parameters>
+            <parameter name="trainingId" />
+        </out-parameters>
+        <actions>
+            <!-- find if record already exists -->
+            <entity-find-one entity-name="MoquiTraining" value-field="isPresent">
+                <field-map field-name="trainingId" from="context.trainingId"/><!--also select parameter.trainingId -->
+            </entity-find-one>
+
+            <if condition="isPresent==null" >
+                <!-- create a new record -->
+                <then>
+                    <entity-make-value entity-name="MoquiTraining" value-field="moquiTraining"/>
+                    <entity-set value-field="moquiTraining" include="all"/>
+                    <entity-create value-field="moquiTraining" />
+                </then>
+            </if>
+            <!--if record already exists, update with a new value-->
+            <if condition="isPresent!=null" >
+
+                <entity-set value-field="isPresent" include="all"/>
+                <entity-update value-field="isPresent"/>
+            </if>
+        </actions>
+    </service>
+
+</services>
