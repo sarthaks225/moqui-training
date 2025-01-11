@@ -1,0 +1,87 @@
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNameSpaceSchemaLocation="http://moqui.org/xsd/rest-api-3.xsd"
+          name="ServiceRestAPI" displayName="RestServiceTesting" version="${moqui_version}" >
+
+    <!-- resource Party CRUD APIs-->
+    <resource name="parties" require-authentication="anonymous-all">
+        <method type="post">
+            <service name="ServiceRest.Service.create#Party"/>
+        </method>
+        <id name="partyId">
+            <method type="get">
+                <service name="ServiceRest.Service.find#Party"/>
+            </method>
+            <method type="put">
+                <service name="ServiceRest.Service.update#Party"/>
+            </method>
+            <method type="delete">
+                <service name="ServiceRest.Service.delete#Party"/>
+            </method>
+
+            <!-- resource contacts CRUD APIs-->
+            <resource name="contacts">
+
+                <method type="post">
+                    <service name="ServiceRest.Service.create#ContactMech"/>
+                </method>
+                <method type="get">
+                    <service name="ServiceRest.Service.find#ContactMech"/>
+                </method>
+
+                <id name="contactMechId">
+                    <method type="put">
+                        <service name="ServiceRest.Service.update#ContactMech"/>
+                    </method>
+                    <method type="delete">
+                        <service name="ServiceRest.Service.delete#ContactMech"/>
+                    </method>
+                </id>
+            </resource>
+        </id>
+    </resource>
+
+    <!-- resource Products CRUD APIs-->
+
+    <resource name="Products" require-authentication="anonymous-all">
+        <method type="post">
+            <service name="ServiceRest.Service.create#Product"/>
+        </method>
+
+        <id name="productId">
+            <method type="get">
+                <service name="ServiceRest.Service.find#Product"/>
+            </method>
+            <method type="delete">
+                <service name="ServiceRest.Service.delete#Product"/>
+            </method>
+            <method type="put">
+                <service name="ServiceRest.Service.update#Product"/>
+            </method>
+        </id>
+    </resource>
+
+<!-- resource orders CRUD APIs-->
+
+    <resource name="orders" require-authentication="anonymous-all">
+        <method type="post">
+            <service name="ServiceRest.Service.create#OrderHeader"/>
+        </method>
+        <id name="orderId">
+            <method type="get">
+                <service name="ServiceRest.Service.find#OrderHeader"/>
+            </method>
+            <method type="delete">
+                <service name="ServiceRest.Service.delete#OrderHeader"/>
+            </method>
+            <method type="put">
+                <service name="ServiceRest.Service.update#OrderHeader"/>
+            </method>
+            <resource name="items" require-authentication="anonymous-all">
+                <method type="post">
+                    <service name="ServiceRest.Service.create#OrderItem"/>
+                </method>
+            </resource>
+        </id>
+    </resource>
+
+</resource>

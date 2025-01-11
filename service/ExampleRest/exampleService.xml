@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+
+    <!-- create party -->
+    <service verb="create" noun="Partya" type="inline">
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+            <parameter name="partyType" required="true" />
+            <parameter name="firstName" required="true" />
+            <parameter name="lastName" />
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId"/>
+        </out-parameters>
+        <actions>
+            <entity-make-value entity-name="Partya" value-field="object"/>
+            <entity-set value-field="object" include="all"/>
+            <entity-create value-field="object" />
+        </actions>
+    </service>
+    
+    <!-- retrieve party-->
+    
+    <service verb="find" noun="Partya" type="inline">
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="parties" required="true"/>
+        </out-parameters>
+
+        <actions>
+            <entity-find entity-name="Partya" list="parties">
+                <econdition field-name="partyId" from="context.partyId"/>
+                <select-field field-name="firstName" />
+                <select-field field-name="lastName"/>
+            </entity-find>
+        </actions>
+
+    </service>
+
+
+<!--    &lt;!&ndash; update partya &ndash;&gt;-->
+
+    <service verb="update" noun="Partya" type="inline">
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+            <parameter name="partyType" />
+            <parameter name="firstName" />
+            <parameter name="lastName" />
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId" />
+        </out-parameters>
+
+        <actions>
+            <entity-find-one entity-name="Partya" value-field="partyObject" />
+            <entity-set value-field="partyObject" include="all"/>
+            <entity-update value-field="partyObject"/>
+
+        </actions>
+
+    </service>
+    
+    <!-- delete a partya by using id-->
+    <service verb="delete" noun="Partya" type="inline">
+        
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyId"/>
+        </out-parameters>
+        <actions>
+            <entity-find-one entity-name="Partya" value-field="object"/>
+            <entity-delete value-field="object"/>
+        </actions>
+    </service>
+
+<!--    <field name="contactMechId" type="id" is-pk="true"/>-->
+<!--    <field name="partyId" type="id" />-->
+<!--    <field name="streetAddress" type="text-medium" not-null="true"/>-->
+<!--    <field name="city" type="text-medium"/>-->
+<!--    <field name="state" type="text-medium" />-->
+<!--    <field name="postalCode" type="text-medium"/>-->
+
+
+    <service verb="create" noun="ContactMecha" type="inline">
+
+        <in-parameters>
+            <parameter name="contactMechId" required="true"/>
+            <parameter name="partyId" required="true"/>
+            <parameter name="streetAddress" required="true"/>
+            <parameter name="city" required="true"/>
+            <parameter name="state" required="true"/>
+            <parameter name="postalCode" required="true"/>
+        </in-parameters>
+
+        <out-parameters>
+            <parameter name="contactMechId" />
+        </out-parameters>
+
+        <actions>
+
+            <entity-make-value entity-name="ContactMecha" value-field="ContactMechaObject"/>
+            <entity-set value-field="ContactMechaObject" include="all"/>
+            <entity-create value-field="ContactMechaObject" />
+
+        </actions>
+    </service>
+
+    <service verb="find" noun="ContactMecha" type="inline">
+        <in-parameters>
+            <parameter name="contactMechaId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="list" required="true"/>
+        </out-parameters>
+
+        <actions>
+            <entity-find entity-name="ContactMecha" list="list">
+                <econdition field-name="contactMechaId" from="context.ContactMechaId"/>
+
+                <select-field field-name="streetAddress"/>
+                <select-field field-name="city"/>
+
+            </entity-find>
+
+        </actions>
+    </service>
+
+    <service verb="delete" noun="ContactMecha" type="inline">
+        <in-parameters>
+            <parameter name="contactMechId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="contactMechId" />
+        </out-parameters>
+        <actions>
+            <entity-find-one entity-name="ContactMecha" value-field="ContactMechaObject" />
+                <entity-delete value-field="ContactMechaObject"/>
+        </actions>
+    </service>
+
+    <!-- find ContactMecha -->
+<!--    <service verb="find" noun="ContactMecha" type="inline">-->
+<!--        <in-parameters>-->
+<!--            <parameter name="contactMechaId" />-->
+<!--        </in-parameters>-->
+
+<!--        <out-parameters>-->
+
+
+<!--        </out-parameters>-->
+
+<!--    </service>-->
+
+
+</services>
