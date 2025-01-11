@@ -9,15 +9,15 @@
             <parameter name="partyId" required="true"/>
             <parameter name="partyType" required="true"/>
             <parameter name="firstName" required="true"/>
-            <parameter name="lastName" required="true"/>
+            <parameter name="lastName" />
         </in-parameters>
         <out-parameters>
             <parameter name="partyId"/>
         </out-parameters>
         <actions>
-            <entity-make-value entity-name="Party" value-field="newParty"/>
-            <entity-set value-field="newParty" include="all"/>
-            <entity-create value-field="newParty" />
+            <entity-make-value entity-name="Party" value-field="newPartyObject"/>
+            <entity-set value-field="newPartyObject" include="all"/>
+            <entity-create value-field="newPartyObject" />
         </actions>
     </service>
 
@@ -44,17 +44,17 @@
             <parameter name="partyId" required="true"/>
             <parameter name="partyType" required="true"/>
             <parameter name="firstName" required="true"/>
-            <parameter name="lastName" required="true"/>
+            <parameter name="lastName"/>
         </in-parameters>
         <out-parameters>
             <parameter name="partyId"/>
         </out-parameters>
         <actions>
-            <entity-find-one entity-name="Party" value-field="party">
+            <entity-find-one entity-name="Party" value-field="partyObject">
                 <field-map field-name="partyId" from="context.partyId"/>
             </entity-find-one>
-            <entity-set value-field="party" include="all"/>
-            <entity-update value-field="party" />
+            <entity-set value-field="partyObject" include="all"/>
+            <entity-update value-field="partyObject" />
         </actions>
     </service>
 
@@ -66,19 +66,19 @@
             <parameter name="partyId" />
         </out-parameters>
         <actions>
-            <entity-find-one entity-name="Party" value-field="isParty">
+            <entity-find-one entity-name="Party" value-field="partyObject">
                 <field-map field-name="partyId" from="context.partyId"/>
             </entity-find-one>
-            <entity-find-one entity-name="OrderHeader" value-field="isOrderHeader">
+            <entity-find-one entity-name="OrderHeader" value-field="orderObject">
                 <field-map field-name="partyId" from="context.partyId" />
             </entity-find-one>
-            <if condition="isOrderHeader != null">
-                <entity-delete-related value-field="isOrderHeader" relationship-name="OrderItem" />
+            <if condition="orderObject != null">
+                <entity-delete-related value-field="orderObject" relationship-name="OrderItem" />
             </if>
-            <if condition="isParty!=null">
-                <entity-delete-related value-field="isParty" relationship-name="OrderHeader" />
-                <entity-delete-related value-field="isParty" relationship-name="ContactMech" />
-                <entity-delete value-field="isParty"/>
+            <if condition="partyObject!=null">
+                <entity-delete-related value-field="partyObject" relationship-name="OrderHeader" />
+                <entity-delete-related value-field="partyObject" relationship-name="ContactMech" />
+                <entity-delete value-field="partyObject"/>
             </if>
         </actions>
     </service>
@@ -98,9 +98,9 @@
             <parameter name="contactMechId" required="true"/>
         </out-parameters>
         <actions>
-            <entity-make-value entity-name="ContactMech" value-field="newContactMech"/>
-            <entity-set value-field="newContactMech" include="all"/>
-            <entity-create value-field="newContactMech" />
+            <entity-make-value entity-name="ContactMech" value-field="ContactMechObject"/>
+            <entity-set value-field="ContactMechObject" include="all"/>
+            <entity-create value-field="ContactMechObject" />
         </actions>
     </service>
 
@@ -109,10 +109,10 @@
             <parameter name="partyId" required="true"/>
         </in-parameters>
         <out-parameters>
-            <parameter name="contactList" required="true"/>
+            <parameter name="list" required="true"/>
         </out-parameters>
         <actions>
-            <entity-find entity-name="ContactMech" list="contactList">
+            <entity-find entity-name="ContactMech" list="list">
                 <econdition field-name="partyId"/>
                 <select-field field-name="contactMechId"/>
                 <select-field field-name="partyId"/>
@@ -137,11 +137,11 @@
             <parameter name="contactMechId"/>
         </out-parameters>
         <actions>
-            <entity-find-one entity-name="ContactMech" value-field="contactMech">
+            <entity-find-one entity-name="ContactMech" value-field="ContactObject">
                 <field-map field-name="contactMechId" from="contactMechId"/>
             </entity-find-one>
-            <entity-set value-field="contactMech" include="all"/>
-            <entity-update value-field="contactMech" />
+            <entity-set value-field="ContactObject" include="all"/>
+            <entity-update value-field="ContactObject" />
         </actions>
     </service>
 
@@ -155,14 +155,14 @@
         </out-parameters>
 
         <actions>
-            <entity-find-one entity-name="ContactMech" value-field="isContactMech">
+            <entity-find-one entity-name="ContactMech" value-field="ContactObject">
                 <field-map field-name="partyId" from="context.partyId" />
                 <field-map field-name="contactMechId" from="context.contactMechId" />
             </entity-find-one>
-            <if condition="isContactMech!=null">
-                <entity-find-related value-field="isContactMech" relationship-name="OrderHeader" list="list" />
+            <if condition="ContactObject!=null">
+                <entity-find-related value-field="ContactObject" relationship-name="OrderHeader" list="list" />
                 <if condition="!list">
-                    <entity-delete value-field="isContactMech" />
+                    <entity-delete value-field="ContactObject" />
                 </if>
                 <else>
                     <return error="true" message="contact not deleted"/>
@@ -184,9 +184,9 @@
             <parameter name="productId" required="true"/>
         </out-parameters>
         <actions>
-            <entity-make-value entity-name="Product" value-field="newProduct"/>
-            <entity-set value-field="newProduct" include="all"/>
-            <entity-create value-field="newProduct" />
+            <entity-make-value entity-name="Product" value-field="productObject"/>
+            <entity-set value-field="productObject" include="all"/>
+            <entity-create value-field="productObject" />
         </actions>
     </service>
 
@@ -195,10 +195,10 @@
             <parameter name="productId" required="true"/>
         </in-parameters>
         <out-parameters>
-            <parameter name="productList" required="true"/>
+            <parameter name="list" required="true"/>
         </out-parameters>
         <actions>
-            <entity-find entity-name="Product" list="productList">
+            <entity-find entity-name="Product" list="list">
                 <econdition field-name="productId"/>
                 <select-field field-name="productId"/>
                 <select-field field-name="productName"/>
@@ -219,11 +219,11 @@
             <parameter name="productId"/>
         </out-parameters>
         <actions>
-            <entity-find-one entity-name="Product" value-field="updateProduct">
+            <entity-find-one entity-name="Product" value-field="productObject">
                 <field-map field-name="productId" from="context.productId"/>
             </entity-find-one>
-            <entity-set value-field="updateProduct" include="all"/>
-            <entity-update value-field="updateProduct"/>
+            <entity-set value-field="productObject" include="all"/>
+            <entity-update value-field="productObject"/>
         </actions>
     </service>
     
@@ -235,12 +235,12 @@
             <parameter name="productId" />
         </out-parameters>
         <actions>
-            <entity-find-one entity-name="Product" value-field="isProduct">
+            <entity-find-one entity-name="Product" value-field="productObject">
                 <field-map field-name="productId" from="context.productId"/>
             </entity-find-one>
-            <if condition="isProduct!=null">
-                <entity-delete-related value-field="isProduct" relationship-name="OrderItem" />
-                <entity-delete value-field="isProduct"/>
+            <if condition="productObject!=null">
+                <entity-delete-related value-field="productObject" relationship-name="OrderItem" />
+                <entity-delete value-field="productObject"/>
             </if>
         </actions>
     </service>
@@ -259,21 +259,21 @@
             <parameter name="orderId" required="true"/>
         </out-parameters>
         <actions>
-            <entity-make-value entity-name="OrderHeader" value-field="newOrder"/>
-            <entity-set value-field="newOrder" include="all"/>
-            <entity-create value-field="newOrder" />
+            <entity-make-value entity-name="OrderHeader" value-field="orderObject"/>
+            <entity-set value-field="orderObject" include="all"/>
+            <entity-create value-field="orderObject" />
         </actions>
     </service>
 
-    <service verb="find" noun="OrderHeader" type="inline">
+    <service verb="find" noun="OrderHeader" >
         <in-parameters>
             <parameter name="orderId" required="true"/>
         </in-parameters>
         <out-parameters>
-            <parameter name="orderHeaderList" required="true"/>
+            <parameter name="list" required="true"/>
         </out-parameters>
         <actions>
-            <entity-find entity-name="OrderHeader" list="orderHeaderList">
+            <entity-find entity-name="OrderHeader" list="list">
                 <econdition field-name="orderId"/>
                 <select-field field-name="orderId"/>
                 <select-field field-name="orderDate"/>
@@ -284,7 +284,7 @@
         </actions>
     </service>
 
-    <service verb="update" noun="OrderHeader" type="inline">
+    <service verb="update" noun="OrderHeader" >
         <in-parameters>
             <parameter name="orderId" required="true"/>
             <parameter name="orderDate" required="true"/>
@@ -296,15 +296,15 @@
             <parameter name="orderId"/>
         </out-parameters>
         <actions>
-            <entity-find-one entity-name="OrderHeader" value-field="updateOrder">
+            <entity-find-one entity-name="OrderHeader" value-field="orderObject">
                 <field-map field-name="orderId" from="context.orderId"/>
             </entity-find-one>
-            <entity-set value-field="updateOrder" include="all"/>
-            <entity-update value-field="updateOrder" />
+            <entity-set value-field="orderObject" include="all"/>
+            <entity-update value-field="orderObject" />
         </actions>
     </service>
 
-    <service verb="delete" noun="OrderHeader" type="inline">
+    <service verb="delete" noun="OrderHeader" >
         <in-parameters>
             <parameter name="orderId" required="true"/>
         </in-parameters>
@@ -312,11 +312,11 @@
             <parameter name="orderId" />
         </out-parameters>
         <actions>
-            <entity-find-one entity-name="OrderHeader" value-field="isOrderHeader">
+            <entity-find-one entity-name="OrderHeader" value-field="orderObject">
                 <field-map field-name="orderId" from="orderId" />
             </entity-find-one>
-            <entity-delete-related value-field="isOrderHeader" relationship-name="OrderItem"/>
-            <entity-delete value-field="isOrderHeader"/>
+            <entity-delete-related value-field="orderObject" relationship-name="OrderItem"/>
+            <entity-delete value-field="orderObject"/>
         </actions>
     </service>
 
@@ -333,9 +333,9 @@
             <parameter name="orderItemSeqId" required="true"/>
         </out-parameters>
         <actions>
-            <entity-make-value entity-name="OrderItem" value-field="newOrderItem"/>
-            <entity-set value-field="newOrderItem" include="all"/>
-            <entity-create value-field="newOrderItem" />
+            <entity-make-value entity-name="OrderItem" value-field="orderObject"/>
+            <entity-set value-field="orderObject" include="all"/>
+            <entity-create value-field="orderObject" />
         </actions>
     </service>
 </services>
